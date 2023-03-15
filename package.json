@@ -1,0 +1,19 @@
+{
+  "name": "loka.js",
+  "version": "1.0.0",
+  "description": "A loka api wrapper for nodejs and ts!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Loka",
+    "nodejs"
+  ],
+  "author": "itsredstonepro#0979 (discord)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n/a/issues"
+  },
+  "homepage": "https://github.com/n/a#readme"
+}
