@@ -64,7 +64,7 @@ module.exports.get.byWorldAndNumb = async function (world, numb){
 }
 module.exports.custom = {}
 
-module.exports.custom.byTown = async function(townId, selectionMenuCB){
+module.exports.custom.byTown = async function(townId){
     var out = {}
     try {
         out = await axios.get("https://testapi.lokamc.com/territories?size=1000")

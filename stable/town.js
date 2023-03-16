@@ -44,7 +44,7 @@ module.exports.get.byArea = async function(area){
 
 module.exports.custom = {}
 
-module.exports.custom.userSearch = async function(searchQuery){
+module.exports.custom.userTownSearch = async function(searchQuery){ // Primairly used for user interaction. Town searching, use it like you do with google.
     var out = {}
     try {
         out = await axios.get("https://testapi.lokamc.com/towns?size=1000")
@@ -53,9 +53,32 @@ module.exports.custom.userSearch = async function(searchQuery){
     }
 
     if (out.data){
-        
+        var hits = []
 
-        
+        for (var i = 0; i <  out.data._embedded.towns.length; i++){
+            if (out.data._embedded.towns[i].name.toLowerCase().includes(searchQuery.toLowerCase())){
+                hits.push(out.data._embedded.towns[i].name)
+            }
+        }
+
+        return {
+            error:false,
+            hits:hits,
+            selectoption:(option)=>{  //Option must be an int
+                if (hits[option]){
+
+                    return {
+                        error:false,
+                        data:hits[option] //Sucess
+                    }
+
+                } else {
+                    return {
+                        error:true  //Invalid option
+                    }
+                }
+            }
+        }
 
 
     } else {
