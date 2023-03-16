@@ -5,7 +5,7 @@ module.exports.get = {}
 module.exports.get.byId = async function(Id){
     var out = {}
     try {
-        out = await axios.get("http://testapi.lokamc.com/players/search/findByUuid?uuid=" + Id)
+        out = await axios.get("http://testapi.lokamc.com/territories/search/findById?id=" + Id)
     } catch(e){
 
     }
