@@ -11,9 +11,5 @@
     "nodejs"
   ],
   "author": "itsredstonepro#0979 (discord)",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/n/a/issues"
-  },
-  "homepage": "https://github.com/n/a#readme"
+  "license": "ISC"
 }
