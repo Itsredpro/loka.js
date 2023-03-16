@@ -8,6 +8,7 @@ Alpha 1
 
 #### Installation:
 `npm i loka.js`
+`npm i axios`
 
 
 more docs coming soon
