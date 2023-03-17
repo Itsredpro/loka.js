@@ -11,7 +11,7 @@ module.exports.get.byName = async function(exactName){
     if (out.data){
         return {
             error:false,
-            data:out.data
+            data:out.data._embedded
         }
     } else {
         return {
@@ -32,7 +32,7 @@ module.exports.get.byArea = async function(area){
     if (out.data){
         return {
             error:false,
-            data:out.data //(Returns multiple towns!)
+            data:out.data._embedded //(Returns multiple towns!)
         }
     } else {
         return {

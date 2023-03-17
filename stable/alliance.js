@@ -11,7 +11,7 @@ module.exports.get.byName = async function(exactName){
     if (out.data){
         return {
             error:false,
-            data:out.data
+            data:out.data._embedded
         }
     } else {
         return {

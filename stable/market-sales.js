@@ -11,7 +11,7 @@ module.exports.get.byType = async function(Type){
     if (out.data){
         return {
             error:false,
-            data:out.data
+            data:out.data._embedded
         }
     } else {
         return {

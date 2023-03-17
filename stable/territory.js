@@ -13,7 +13,7 @@ module.exports.get.byId = async function(Id){
     if (out.data){
         return {
             error:false,
-            data:out.data
+            data:out.data._embedded
         }
     } else {
         return {
@@ -34,7 +34,7 @@ module.exports.get.byNumb = async function(Numb){
     if (out.data){
         return {
             error:false,
-            data:out.data
+            data:out.data._embedded
         }
     } else {
         return {
@@ -54,7 +54,7 @@ module.exports.get.byWorldAndNumb = async function (world, numb){
     if (out.data){
         return {
             error:false,
-            data:out.data
+            data:out.data._embedded
         }
     } else {
         return {

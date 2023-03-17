@@ -4,6 +4,7 @@ const territory = require(__dirname + "/stable/territory.js")
 const players = require(__dirname + "/stable/player.js")
 const market_buy = require(__dirname + "/stable/market-buy.js")
 const sales = require(__dirname + "/stable/market-sales.js")
+const battle = require(__dirname + "/stable/battle.js")
 
 module.exports = {
     "alliance":alliances,
@@ -11,5 +12,6 @@ module.exports = {
     "territory":territory,
     "player":players,
     "market_sales":sales,
-    "market_buy":market_buy
+    "market_buy":market_buy,
+    "battle":battle
 }
