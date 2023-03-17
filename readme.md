@@ -46,3 +46,6 @@ more docs coming soon
     - get
         - byType
         - fullList
+- battle
+    - get
+        - battles
