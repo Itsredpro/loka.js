@@ -4,11 +4,9 @@
 
 
 Welcome to the loka.js api by itsredstonepro#0979
-Alpha 1
 
 #### Installation:
-`npm i loka.js`
-`npm i axios`
+`npm i loka.js axios`
 
 
 more docs coming soon
@@ -28,7 +26,7 @@ more docs coming soon
         - byArea
         - byTown
     - custom
-        - userTownSearch
+        - userTownSearch (for user interaction)
 - alliance
     - get
         - byName
@@ -49,7 +47,7 @@ more docs coming soon
 - battle
     - get
         - battles
-- transactions
+- transaction
     - get
         - byName
         - byType
