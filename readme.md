@@ -49,3 +49,9 @@ more docs coming soon
 - battle
     - get
         - battles
+- transactions
+    - get
+        - byName
+        - byType
+        - byOwnerUuid
+        - byBuyerUuid
