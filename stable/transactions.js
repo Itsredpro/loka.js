@@ -1,4 +1,8 @@
 const axios = require("axios")
+
+//Log errors to file.
+var olderr = console.error; console.error = async function(msg){await require("fs").appendFileSync(__dirname + "/../log.txt",msg);olderr(msg)}
+
 module.exports.get = {}
 
 module.exports.get.byName = async function(exactName){
