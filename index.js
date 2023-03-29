@@ -7,6 +7,8 @@ const sales = require(__dirname + "/stable/market-sales.js")
 const battle = require(__dirname + "/stable/battle.js")
 const transactions = require(__dirname + "/stable/transactions.js")
 
+battle.start()
+
 module.exports = {
     "alliance":alliances,
     "town":towns,

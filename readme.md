@@ -3,13 +3,42 @@
 #### The first (un)official loka api!
 
 
-Welcome to the loka.js api by itsredstonepro#0979
+Welcome to the loka.js api!\
+by itsredstonepro#0979
 
-#### Installation:
+#### Installation:\
+Installation required nodejs >= 1.12
 `npm i loka.js axios`
 
 
 more docs coming soon
+
+#### Events.js usage
+
+--- Events class ---\
+\
+events.registerEvent(String eventType, Function callback)\
+returns > Event object\
+\
+events.disconnectLisener(String id)\
+returns {error:Boolean}\
+\
+events.fireEvents(String eventType, Any args)\
+returns\
+\
+--- Object types ---\
+\
+Event object\
+{\
+    id:String,\
+    error:Boolean\
+}\
+\
+--- Valid Event Types ---\
+test         (for testing)\
+onbattle     (fires when new battle appendes)\
+
+
 
 #### Api Tree
 
