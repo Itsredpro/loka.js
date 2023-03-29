@@ -9,7 +9,7 @@ by itsredstonepro#0979
 ## Installation:\
 Installation requires nodejs >= 1.12\
 `npm i loka.js axios`
-
+\
 
 more docs coming soon
 
@@ -24,7 +24,7 @@ events.disconnectLisener(String id)\
 returns {error:Boolean}\
 \
 events.fireEvents(String eventType, Any args)\
-returns\
+returns void
 
 #### --- Object types ---
 \
@@ -32,7 +32,7 @@ Event object\
 {\
     id:String,\
     error:Boolean\
-}\
+}
 
 #### --- Valid Event Types ---
 test         (for testing)\
