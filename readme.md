@@ -6,14 +6,14 @@
 Welcome to the loka.js api!\
 by itsredstonepro#0979
 
-#### Installation:\
+## Installation:\
 Installation required nodejs >= 1.12
 `npm i loka.js axios`
 
 
 more docs coming soon
 
-#### Events.js usage
+## Events.js usage
 
 --- Events class ---\
 \
@@ -40,7 +40,7 @@ onbattle     (fires when new battle appendes)\
 
 
 
-#### Api Tree
+## Api Tree
 
 - territory
     - get
