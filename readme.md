@@ -15,7 +15,7 @@ more docs coming soon
 
 ## Events.js usage
 
---- Events class ---\
+#### --- Events class ---
 \
 events.registerEvent(String eventType, Function callback)\
 returns > Event object\
@@ -26,7 +26,7 @@ returns {error:Boolean}\
 events.fireEvents(String eventType, Any args)\
 returns\
 \
---- Object types ---\
+#### --- Object types ---
 \
 Event object\
 {\
@@ -34,7 +34,7 @@ Event object\
     error:Boolean\
 }\
 \
---- Valid Event Types ---\
+#### --- Valid Event Types ---
 test         (for testing)\
 onbattle     (fires when new battle appendes)\
 
