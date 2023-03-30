@@ -6,10 +6,10 @@
 Welcome to the loka.js api!\
 by itsredstonepro#0979
 
-## Installation:\
+## Installation:
 Installation requires nodejs >= 1.12\
 `npm i loka.js axios`
-\
+
 
 more docs coming soon
 

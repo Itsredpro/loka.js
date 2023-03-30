@@ -53,6 +53,9 @@ function battleChecker(CheckInterval) {
         if (tableA != ''){
 
           const newItems = tableB.filter((itemB) => !tableA.find((itemA) => itemA.id === itemB.id));
+          if (newItems.length > 0){
+            //console.log(newItems)
+          }
           //console.log('New items:', newItems);
 
           for (var i = 0; i < newItems.length; i++){
@@ -64,6 +67,14 @@ function battleChecker(CheckInterval) {
           const removedItems = tableA.filter((itemA) => !tableB.find((itemB) => itemB.id === itemA.id));
           //console.log('Removed items:', removedItems);
 
+          if (removedItems.length > 0){
+            //console.log(removedItems)
+          }
+
+          if (removedItems.length == 0 && newItems.length == 0){
+            //console.log("[Loka.js][LOG] - no changes found.")
+            //console.log(Object.keys(tableB))
+          }
         }
 
         tableA = tableB

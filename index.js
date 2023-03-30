@@ -6,6 +6,7 @@ const market_buy = require(__dirname + "/stable/market-buy.js")
 const sales = require(__dirname + "/stable/market-sales.js")
 const battle = require(__dirname + "/stable/battle.js")
 const transactions = require(__dirname + "/stable/transactions.js")
+const events = require(__dirname + "/events.js")
 
 battle.start()
 
@@ -17,5 +18,6 @@ module.exports = {
     "market_sales":sales,
     "market_buy":market_buy,
     "battle":battle,
-    "transaction":transactions
+    "transaction":transactions,
+    "events":events
 }
