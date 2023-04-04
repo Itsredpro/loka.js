@@ -34,7 +34,7 @@ module.exports.get.fullList = async function(){
     }
 
     if (out.data){
-        for (var i = 0; i< out.data.page.totalPages.length; i++){
+        for (var i = 0; i< out.data.page.totalPages; i++){
             var out = []
             var error = false
             try {
