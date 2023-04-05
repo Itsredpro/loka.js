@@ -16,6 +16,7 @@ more docs coming soon
 ## Events.js usage
 
 #### --- Events class ---
+const events = require("loka.js").events\
 \
 events.registerEvent(String eventType, Function callback)\
 returns > Event object\
@@ -35,8 +36,12 @@ Event object\
 }
 
 #### --- Valid Event Types ---
-test         (for testing)\
-onbattle     (fires when new battle appendes)
+test             (for testing)\
+onbattle         (fires when new battle appendes)\
+ontownappend     (fires when new town appendes)\
+ontownremove     (fires when town is destoyed/fallen)\
+onallianceappend (fires when new alliance appendes)\
+onallianceremove (fires when alliance is destroyed/fallen)
 
 
 

@@ -9,7 +9,7 @@ const register = {
     ]
 }
 
-const eventTypes = ['test','onbattle']
+const eventTypes = ['test','onbattle',"ontownappend","ontownremove"]
 
 
 module.exports.registerEvent = async function(eventType, callBack){
