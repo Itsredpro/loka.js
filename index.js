@@ -9,6 +9,7 @@ const transactions = require(__dirname + "/stable/transactions.js")
 const events = require(__dirname + "/events.js")
 
 battle.start()
+alliances.start()
 
 module.exports = {
     "alliance":alliances,

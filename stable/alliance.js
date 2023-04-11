@@ -64,33 +64,38 @@ module.exports.get.fullList = async function(){
     }
 }
 
+function allianceChecker(){
+    setInterval(async () => {
+        const data = module.exports.get.fullList()
+        if (data.error) { await fs.appendFileSync(__dirname + "/../log.txt", "Error at fetching alliance full list"); return }
 
-setInterval(async () => {
-    const data = module.exports.get.fullList()
-    if (data.error) { await fs.appendFileSync(__dirname + "/../log.txt", "Error at fetching alliance full list"); return }
 
-
-    //A is old
-    //B is new
-    const newItems = tableB.filter((itemB) => !tableA.find((itemA) => itemA.id === itemB.id));
-    if (newItems.length > 0) {
-        //console.log(newItems)
-        for (var i = 0; i < newItems.length; i++) {
-            var c = newItems[i]
-    
-            events.fireEvents('onallianceappend', c)
+        //A is old
+        //B is new
+        const newItems = tableB.filter((itemB) => !tableA.find((itemA) => itemA.id === itemB.id));
+        if (newItems.length > 0) {
+            //console.log(newItems)
+            for (var i = 0; i < newItems.length; i++) {
+                var c = newItems[i]
+        
+                events.fireEvents('onallianceappend', c)
+            }
         }
-    }
 
-    const removedItems = tableA.filter((itemA) => !tableB.find((itemB) => itemB.id === itemA.id));
+        const removedItems = tableA.filter((itemA) => !tableB.find((itemB) => itemB.id === itemA.id));
 
-    if (removedItems.length > 0) {
-        //console.log(removedItems)
-        for (var i = 0; i < removedItems.length; i++) {
-            var c = removedItems[i]
-    
-            events.fireEvents('onallianceremove', c)
+        if (removedItems.length > 0) {
+            //console.log(removedItems)
+            for (var i = 0; i < removedItems.length; i++) {
+                var c = removedItems[i]
+        
+                events.fireEvents('onallianceremove', c)
+            }
         }
-    }
 
-}, 60000 * 2)
+    }, 60000 * 2)
+}
+
+module.exports.start = function(){
+    allianceChecker()
+}
