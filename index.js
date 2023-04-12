@@ -10,6 +10,7 @@ const events = require(__dirname + "/events.js")
 
 battle.start()
 alliances.start()
+town.start()
 
 module.exports = {
     "alliance":alliances,
