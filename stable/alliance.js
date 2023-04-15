@@ -65,11 +65,14 @@ module.exports.get.fullList = async function(){
 }
 
 function allianceChecker(){
+    var latest = []
+
     setInterval(async () => {
         const data = module.exports.get.fullList()
         if (data.error) { await fs.appendFileSync(__dirname + "/../log.txt", "Error at fetching alliance full list"); return }
 
-
+        var tableA = latest
+        var tableB = data.data
         //A is old
         //B is new
         const newItems = tableB.filter((itemB) => !tableA.find((itemA) => itemA.id === itemB.id));
@@ -93,6 +96,7 @@ function allianceChecker(){
             }
         }
 
+        latest = tableB
     }, 60000 * 2)
 }
 

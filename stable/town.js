@@ -136,11 +136,16 @@ module.exports.custom.userTownSearch = async function (searchQuery) { // Primair
 }
 
 function townChecker(){
+    var latest = []
+
     setInterval(async () => {
         const data = module.exports.get.fullList()
         if (data.error) { await fs.appendFileSync(__dirname + "/../log.txt", "Error at fetching town full list"); return }
 
+        
 
+        var tableA = latest
+        var tableB = data.data
         //A is old
         //B is new
         const newItems = tableB.filter((itemB) => !tableA.find((itemA) => itemA.id === itemB.id));
@@ -163,6 +168,8 @@ function townChecker(){
                 events.fireEvents('ontownremove', c)
             }
         }
+
+        latest = tableB
 
     }, 60000 * 2)
 }
