@@ -139,7 +139,7 @@ function townChecker(){
     var latest = []
 
     setInterval(async () => {
-        const data = module.exports.get.fullList()
+        const data = await module.exports.get.fullList()
         if (data.error) { await fs.appendFileSync(__dirname + "/../log.txt", "Error at fetching town full list"); return }
 
         
