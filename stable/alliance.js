@@ -1,4 +1,5 @@
 const axios = require("axios")
+const events = require(__dirname + "/../events.js")
 
 //Log errors to file.
 var olderr = console.error; console.error = async function(msg){await require("fs").appendFileSync(__dirname + "/../log.txt",msg);olderr(msg)}
@@ -16,7 +17,7 @@ module.exports.get.byName = async function(exactName){
     if (out.data){
         return {
             error:false,
-            data:out.data._embedded
+            data:out.data
         }
     } else {
         return {
@@ -72,9 +73,9 @@ function allianceChecker(){
         if (data.error) { await fs.appendFileSync(__dirname + "/../log.txt", "Error at fetching alliance full list"); return }
 
         var tableA = latest
-        var tableB = data
+        var tableB = data.data
 
-        console.log(tableB)
+        
 
         //A is old
         //B is new

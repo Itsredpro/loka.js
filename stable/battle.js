@@ -32,7 +32,6 @@ module.exports.get.battles = async function () {
 var tableA = ''
 
 function battleChecker(CheckInterval) {
-  console.log("[Loka.js][LOG] - Running battle checker")
 
   var loop = setInterval(async () => {
     var results = {};

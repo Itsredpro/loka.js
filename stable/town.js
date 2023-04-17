@@ -1,4 +1,5 @@
 const axios = require("axios");
+const events = require(__dirname + "/../events.js")
 const fs = require("fs");
 
 //Log errors to file.

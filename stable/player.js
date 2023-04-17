@@ -17,7 +17,7 @@ module.exports.get.byName = async function (exactName) {
     if (out.data) {
         return {
             error: false,
-            data: out.data._embedded
+            data: out.data
         }
     } else {
         return {
@@ -38,7 +38,7 @@ module.exports.get.byUuid = async function (uuid) {
     if (out.data) {
         return {
             error: false,
-            data: out.data._embedded
+            data: out.data
         }
     } else {
         return {
