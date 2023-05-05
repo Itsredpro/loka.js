@@ -1,5 +1,6 @@
 const axios = require("axios")
 const events = require(__dirname + "/../events.js")
+const main = require(__dirname + "/../index.js")
 
 //Log errors to file.
 var olderr = console.error; console.error = async function(msg){await require("fs").appendFileSync(__dirname + "/../log.txt",msg);olderr(msg)}
@@ -65,8 +66,18 @@ module.exports.get.fullList = async function(){
     }
 }
 
-function allianceChecker(){
-    var latest = []
+async function allianceChecker(){
+    var latest
+
+    if (main.programSettings.logs.town.preserveLogs){
+        latest = await JSON.parse(await fs.readFileSync(main.programSettings.logs.town.filePath).toLocaleString())
+    } else {
+        if (main.programSettings.logs.town.useNewAsLatest){
+            latest = []
+        } else {
+            latest = await module.exports.get.fullList().data
+        }
+    }
 
     setInterval(async () => {
         const data = await module.exports.get.fullList()
@@ -100,6 +111,8 @@ function allianceChecker(){
             }
         }
 
+
+        await fs.writeFileSync(main.programSettings.logs.alliance.filePath,JSON.stringify(tableB))
         latest = tableB
     }, 60000 * 2)
 }

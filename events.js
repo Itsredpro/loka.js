@@ -1,4 +1,4 @@
-const main = require(__dirname+ "/index.js")
+const main = require(__dirname + "/index.js")
 const register = {
     events:[
         {
@@ -9,7 +9,7 @@ const register = {
     ]
 }
 
-const eventTypes = ['test','onbattle',"ontownappend","ontownremove","onallianceappend","onallianceremove"]
+const eventTypes = main.programSettings.eventSettings.eventTypes
 
 
 module.exports.registerEvent = async function(eventType, callBack){

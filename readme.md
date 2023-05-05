@@ -43,7 +43,13 @@ ontownremove     (fires when town is destoyed/fallen)\
 onallianceappend (fires when new alliance appendes)\
 onallianceremove (fires when alliance is destroyed/fallen)
 
+#### --- Preserved event logs ---
 
+Event logs can be preserved between multiple runs/program starts. The settings are located in the top section of the loka.js's index.js.\
+You can generate new logs by running:  node node_modules/loka.js --noRun --loadNewLogs    , this will generate up-to-date logs into the saves.\
+If preservedLogs equals true then the latest data will be get from the save files on program startup, this can be handy if your program crashes a lot.\
+If preservedLogs equals false then there are 2 options, useNewAsLatest can be true or false, if true then an empty table will be used as the latest and all events will rapidly fire (because it things there are lots of changes). Or useNewAsLatest can be false, then the current "situation" will be used as the latest.\
+You can also change the log save locations as you like by adjusting the filePath parameter.
 
 ## Api Tree
 

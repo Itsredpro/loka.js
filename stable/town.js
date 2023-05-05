@@ -1,5 +1,6 @@
 const axios = require("axios");
 const events = require(__dirname + "/../events.js")
+const main = require(__dirname + "/../index.js")
 const fs = require("fs");
 
 //Log errors to file.
@@ -136,8 +137,20 @@ module.exports.custom.userTownSearch = async function (searchQuery) { // Primair
     }
 }
 
-function townChecker(){
-    var latest = []
+async function townChecker(){
+    var latest
+
+    if (main.programSettings.logs.town.preserveLogs){
+        latest = await JSON.parse(await fs.readFileSync(main.programSettings.logs.town.filePath).toLocaleString())
+    } else {
+        if (main.programSettings.logs.town.useNewAsLatest){
+            latest = []
+        } else {
+            latest = await module.exports.get.fullList().data
+        }
+    }
+
+
 
     setInterval(async () => {
         const data = await module.exports.get.fullList()
@@ -170,6 +183,8 @@ function townChecker(){
             }
         }
 
+
+        await fs.writeFileSync(main.programSettings.logs.town.filePath,JSON.stringify(tableB))
         latest = tableB
 
     }, 60000 * 2)
