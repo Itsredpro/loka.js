@@ -187,7 +187,7 @@ async function townChecker(){
         await fs.writeFileSync(main.programSettings.logs.town.filePath,JSON.stringify(tableB))
         latest = tableB
 
-    }, 60000 * 2)
+    }, main.programSettings.logs.town.checkInterval)
 }
 
 module.exports.start = function(){

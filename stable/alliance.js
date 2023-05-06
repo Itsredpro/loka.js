@@ -1,6 +1,7 @@
 const axios = require("axios")
 const events = require(__dirname + "/../events.js")
 const main = require(__dirname + "/../index.js")
+const fs = require("fs")
 
 //Log errors to file.
 var olderr = console.error; console.error = async function(msg){await require("fs").appendFileSync(__dirname + "/../log.txt",msg);olderr(msg)}
@@ -114,7 +115,7 @@ async function allianceChecker(){
 
         await fs.writeFileSync(main.programSettings.logs.alliance.filePath,JSON.stringify(tableB))
         latest = tableB
-    }, 60000 * 2)
+    },  main.programSettings.logs.alliance.checkInterval)
 }
 
 module.exports.start = function(){

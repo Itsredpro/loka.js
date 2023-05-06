@@ -1,5 +1,7 @@
 const axios = require("axios")
 const events = require(__dirname + "/../events.js")
+const main = require(__dirname + "/../index.js")
+const fs = require("fs")
 
 //Log errors to file.
 var olderr = console.error; console.error = async function (msg) { await require("fs").appendFileSync(__dirname + "/../log.txt", msg); olderr(msg) }
@@ -18,7 +20,7 @@ module.exports.get.battles = async function () {
   if (out.data) {
     return {
       error: false,
-      data: out.data._embedded
+      data: out.data._embedded.territories
     }
   } else {
     return {
@@ -29,9 +31,22 @@ module.exports.get.battles = async function () {
 
 
 
-var tableA = ''
 
-function battleChecker(CheckInterval) {
+
+async function battleChecker() {
+  var tableA = []
+
+
+  if (main.programSettings.logs.battle.preserveLogs){
+    tableA = await JSON.parse(await fs.readFileSync(main.programSettings.logs.battle.filePath).toLocaleString())
+  } else {
+      if (main.programSettings.logs.battle.useNewAsLatest){
+        tableA = []
+      } else {
+        tableA = await module.exports.get.battles().data
+      }
+  }
+
 
   var loop = setInterval(async () => {
     var results = {};
@@ -49,7 +64,7 @@ function battleChecker(CheckInterval) {
         // TODO: Check for new battles
         var tableB = territories
 
-        if (tableA != ''){
+        //if (tableA != ''){
 
           const newItems = tableB.filter((itemB) => !tableA.find((itemA) => itemA.id === itemB.id));
           if (newItems.length > 0){
@@ -74,8 +89,10 @@ function battleChecker(CheckInterval) {
             //console.log("[Loka.js][LOG] - no changes found.")
             //console.log(Object.keys(tableB))
           }
-        }
+        //}
+        
 
+        await fs.writeFileSync(main.programSettings.logs.battle.filePath,JSON.stringify(tableB))
         tableA = tableB
 
       }
@@ -84,7 +101,7 @@ function battleChecker(CheckInterval) {
         `[Loka.js][${new Date().toString().split(" (")[0]}] - Could not fetch data due to an axios error.`
       );
     }
-  }, CheckInterval || 20000);
+  },  main.programSettings.logs.battle.checkInterval);
 };
 
 module.exports.start = function(){
