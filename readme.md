@@ -93,3 +93,4 @@ You can also change the log save locations as you like by adjusting the filePath
         - byType
         - byOwnerUuid
         - byBuyerUuid
+        - latest

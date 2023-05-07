@@ -9,29 +9,64 @@ const fs = require("fs")
 
 
 module.exports.programSettings = {
-        "eventSettings":{
-            "eventTypes":['test','onbattle',"ontownappend","ontownremove","onallianceappend","onallianceremove"] //Do not modify unless you know what you are doing.
+    
+    "logs": { //=========LOG SETTINGS==========
+        "town": {
+            "preserveLogs": true, // Generate up-to-date logs with:    node node_modules/loka.js --noRun --loadNewLogs
+            "useNewAsLatest": false, // only modify if preserverlogs=false
+            "filePath": __dirname + "/saves/town.txt"
         },
-        "logs":{
-            "town":{//USABLE
-                "preserveLogs":true, // Generate up-to-date logs with:    node node_modules/loka.js --noRun --loadNewLogs
-                "useNewAsLatest":false, // only modify if preserverlogs=false
-                "checkInterval":120000, // time in ms
-                "filePath":__dirname + "/saves/town.txt"
+        "alliance": { 
+            "preserveLogs": true,
+            "useNewAsLatest": false, // only modify if preserverlogs=false
+            "filePath": __dirname + "/saves/alliance.txt"
+        },
+        "battle": {  
+            "preserveLogs": true,
+            "useNewAsLatest": false, // only modify if preserverlogs=false
+            "filePath": __dirname + "/saves/battle.txt"
+        },
+        "transaction": {  
+            "preserveLogs": true,
+            "useNewAsLatest": false, // only modify if preserverlogs=false
+            "filePath": __dirname + "/saves/transaction.txt"
+        }
+    },//======================================
+    "settings":{//========SETTINGS============
+        "events":{
+            "town":{
+                "enabled":true,
+                "checkInterval": 120000, // time in ms
             },
-            "alliance":{ //USABLE
-                "preserveLogs":true,
-                "useNewAsLatest":false, // only modify if preserverlogs=false
-                "checkInterval":120000, // time in ms
-                "filePath":__dirname + "/saves/alliance.txt"
+            "alliance":{
+                "enabled":true,
+                "checkInterval": 120000, // time in ms 
             },
-            "battle":{ //USABLE 
-                "preserveLogs":true,
-                "useNewAsLatest":false, // only modify if preserverlogs=false
-                "checkInterval":20000, // time in ms
-                "filePath":__dirname + "/saves/battle.txt"
+            "battle":{
+                "enabled":true,
+                "checkInterval": 20000, // time in ms
+            },
+            "transaction":{
+                "enabled":true,
+                "checkInterval": 20000, // time in ms
             }
         }
+    },
+
+
+
+
+
+
+
+
+
+    //==========CORE==============
+    //Do not modify unless you know what you are doing.
+    "eventSettings": { 
+        "eventTypes": ['test', 'onbattle', "ontownappend", "ontownremove", "onallianceappend", "onallianceremove","ontransaction"]
+    }
+    //============================
 }
 //=======================================================================================================================
 
@@ -53,7 +88,7 @@ console.log("[Loka.js] - Exporting functions.")
 
 
 module.exports["alliance"] = alliances
-module.exports["town"] = towns   
+module.exports["town"] = towns
 module.exports["territory"] = territory
 module.exports["player"] = players
 module.exports["market_sales"] = sales
@@ -64,20 +99,21 @@ module.exports["events"] = events
 
 
 
-async function processArgs(){
-    if (process.argv.indexOf("--noRun") == -1){
+async function processArgs() {
+    if (process.argv.indexOf("--noRun") == -1) {
         console.log("[Loka.js] - Running Event handlers.")
         battle.start()
         alliances.start()
         towns.start()
+        transactions.start()
     } else {
         console.log("[Loka.js] - Started with --noRun")
 
-        if (process.argv.indexOf("--loadNewLogs") != -1){
+        if (process.argv.indexOf("--loadNewLogs") != -1) {
             console.log("[Loka.js] - Loading new logs into saves")
             var Result1 = await towns.get.fullList()
 
-            if (Result1.error){
+            if (Result1.error) {
                 console.log("[Loka.js] - Error at loading logs [TOWNLOG]")
                 process.exit()
             }
@@ -87,7 +123,7 @@ async function processArgs(){
 
             var Result2 = await alliances.get.fullList()
 
-            if (Result2.error){
+            if (Result2.error) {
                 console.log("[Loka.js] - Error at loading logs [ALLIANCELOG]")
                 process.exit()
             }
@@ -97,12 +133,22 @@ async function processArgs(){
 
             var Result3 = await battle.get.battles()
 
-            if (Result3.error){
+            if (Result3.error) {
                 console.log("[Loka.js] - Error at loading logs [BATTLELOG]")
                 process.exit()
             }
 
             await fs.writeFileSync(module.exports.programSettings.logs.battle.filePath, await JSON.stringify(Result3.data))
+
+
+            var Result4 = await transactions.get.latest()
+
+            if (Result4.error) {
+                console.log("[Loka.js] - Error at loading logs [TRANSACTIONLOG]")
+                process.exit()
+            }
+
+            await fs.writeFileSync(module.exports.programSettings.logs.transaction.filePath, await JSON.stringify(Result4.data))
 
             console.log("[Loka.js] - Loaded new logs successfully!")
         }

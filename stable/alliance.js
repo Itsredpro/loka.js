@@ -115,9 +115,11 @@ async function allianceChecker(){
 
         await fs.writeFileSync(main.programSettings.logs.alliance.filePath,JSON.stringify(tableB))
         latest = tableB
-    },  main.programSettings.logs.alliance.checkInterval)
+    },  main.programSettings.settings.events.alliance.checkInterval)
 }
 
 module.exports.start = function(){
-    allianceChecker()
+    if (main.programSettings.settings.events.alliance.enabled){
+        allianceChecker()
+    }
 }

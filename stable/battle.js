@@ -37,14 +37,14 @@ async function battleChecker() {
   var tableA = []
 
 
-  if (main.programSettings.logs.battle.preserveLogs){
+  if (main.programSettings.logs.battle.preserveLogs) {
     tableA = await JSON.parse(await fs.readFileSync(main.programSettings.logs.battle.filePath).toLocaleString())
   } else {
-      if (main.programSettings.logs.battle.useNewAsLatest){
-        tableA = []
-      } else {
-        tableA = await module.exports.get.battles().data
-      }
+    if (main.programSettings.logs.battle.useNewAsLatest) {
+      tableA = []
+    } else {
+      tableA = await module.exports.get.battles().data
+    }
   }
 
 
@@ -66,33 +66,33 @@ async function battleChecker() {
 
         //if (tableA != ''){
 
-          const newItems = tableB.filter((itemB) => !tableA.find((itemA) => itemA.id === itemB.id));
-          if (newItems.length > 0){
-            //console.log(newItems)
-          }
-          //console.log('New items:', newItems);
+        const newItems = tableB.filter((itemB) => !tableA.find((itemA) => itemA.id === itemB.id));
+        if (newItems.length > 0) {
+          //console.log(newItems)
+        }
+        //console.log('New items:', newItems);
 
-          for (var i = 0; i < newItems.length; i++){
-            var c = newItems[i]
+        for (var i = 0; i < newItems.length; i++) {
+          var c = newItems[i]
 
-            events.fireEvents('onbattle', c)
-          }
-          
-          const removedItems = tableA.filter((itemA) => !tableB.find((itemB) => itemB.id === itemA.id));
-          //console.log('Removed items:', removedItems);
+          events.fireEvents('onbattle', c)
+        }
 
-          if (removedItems.length > 0){
-            //console.log(removedItems)
-          }
+        const removedItems = tableA.filter((itemA) => !tableB.find((itemB) => itemB.id === itemA.id));
+        //console.log('Removed items:', removedItems);
 
-          if (removedItems.length == 0 && newItems.length == 0){
-            //console.log("[Loka.js][LOG] - no changes found.")
-            //console.log(Object.keys(tableB))
-          }
+        if (removedItems.length > 0) {
+          //console.log(removedItems)
+        }
+
+        if (removedItems.length == 0 && newItems.length == 0) {
+          //console.log("[Loka.js][LOG] - no changes found.")
+          //console.log(Object.keys(tableB))
+        }
         //}
-        
 
-        await fs.writeFileSync(main.programSettings.logs.battle.filePath,JSON.stringify(tableB))
+
+        await fs.writeFileSync(main.programSettings.logs.battle.filePath, JSON.stringify(tableB))
         tableA = tableB
 
       }
@@ -101,9 +101,11 @@ async function battleChecker() {
         `[Loka.js][${new Date().toString().split(" (")[0]}] - Could not fetch data due to an axios error.`
       );
     }
-  },  main.programSettings.logs.battle.checkInterval);
+  }, main.programSettings.settings.events.battle.checkInterval);
 };
 
-module.exports.start = function(){
-  battleChecker()
+module.exports.start = function () {
+  if (main.programSettings.settings.events.battle.enabled) {
+    battleChecker()
+  }
 }
