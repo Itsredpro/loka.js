@@ -1,15 +1,14 @@
 console.log("[Loka.js] - AUTHOR: itsredstonepro#0979 [=] Running version " + require(__dirname + "/package.json").version)
-
 const fs = require("fs")
 
 
 //--------------------------------------------------------------------------------------------------------------------|
 //-----------------------------                 Settings               -----------------------------------------------|
 //--------------------------------------------------------------------------------------------------------------------|
+const setfile = process.env.PWD + "/lokasettings.js"   //Modify this to your settings file
 
-
-module.exports.programSettings = {
-    
+    /*
+    {
     "logs": { //=========LOG SETTINGS==========
         "town": {
             "preserveLogs": true, // Generate up-to-date logs with:    node node_modules/loka.js --noRun --loadNewLogs
@@ -68,47 +67,116 @@ module.exports.programSettings = {
     }
     //============================
 }
+    */
 //=======================================================================================================================
 
 
 
-
-const alliances = require(__dirname + "/stable/alliance.js")
-const towns = require(__dirname + "/stable/town.js")
-const territory = require(__dirname + "/stable/territory.js")
-const players = require(__dirname + "/stable/player.js")
-const market_buy = require(__dirname + "/stable/market-buy.js")
-const sales = require(__dirname + "/stable/market-sales.js")
-const battle = require(__dirname + "/stable/battle.js")
-const transactions = require(__dirname + "/stable/transactions.js")
-const events = require(__dirname + "/events.js")
-
-
-console.log("[Loka.js] - Exporting functions.")
-
-
-module.exports["alliance"] = alliances
-module.exports["town"] = towns
-module.exports["territory"] = territory
-module.exports["player"] = players
-module.exports["market_sales"] = sales
-module.exports["market_buy"] = market_buy
-module.exports["battle"] = battle
-module.exports["transaction"] = transactions
-module.exports["events"] = events
-
-
-
 async function processArgs() {
+    
+
+
     if (process.argv.indexOf("--noRun") == -1) {
+
+        //LOAD SETTINGS
+        if (!fs.existsSync(setfile)){
+            throw new Error("[Loka.js] - " + setfile + " is not a valid file! [INVALID_SETTINGS_FILE]")
+        }
+        module.exports.programSettings = require(setfile)
+
+
+
+        //LOAD CONSTANTS
+        const alliances = require(__dirname + "/stable/alliance.js")
+        const towns = require(__dirname + "/stable/town.js")
+        const territory = require(__dirname + "/stable/territory.js")
+        const players = require(__dirname + "/stable/player.js")
+        const market_buy = require(__dirname + "/stable/market-buy.js")
+        const sales = require(__dirname + "/stable/market-sales.js")
+        const battle = require(__dirname + "/stable/battle.js")
+        const transactions = require(__dirname + "/stable/transactions.js")
+        const events = require(__dirname + "/events.js")
+
+
+        console.log("[Loka.js] - Exporting functions.")
+
+
+        module.exports["alliance"] = alliances
+        module.exports["town"] = towns
+        module.exports["territory"] = territory
+        module.exports["player"] = players
+        module.exports["market_sales"] = sales
+        module.exports["market_buy"] = market_buy
+        module.exports["battle"] = battle
+        module.exports["transaction"] = transactions
+        module.exports["events"] = events
+
+
+
+
         console.log("[Loka.js] - Running Event handlers.")
+        //START EVENT HANDLERS
         battle.start()
         alliances.start()
         towns.start()
         transactions.start()
+
+
     } else {
+        //STARTING WITHOUT RUNNING
         console.log("[Loka.js] - Started with --noRun")
 
+
+
+
+        //GEN SETTINGS
+        if (process.argv.indexOf("--genSettings") != -1){
+            console.log("[Loka.js] - generating settings into current navigation directory.")
+
+            var templateData = await fs.readFileSync(__dirname + "/template.txt")
+            await fs.writeFileSync(setfile,await templateData.toString())
+
+            console.log("[Loka.js] - generated settings succesfully")
+        }
+
+        //LOAD SETTINGS
+        if (!fs.existsSync(setfile)){
+            throw new Error("[Loka.js] - " + setfile + " is not a valid file! [INVALID_SETTINGS_FILE]")
+        }
+        //WAIT 2S
+        await new Promise(r=>{setTimeout(()=>{r()},2000)})
+        //CONTINUE LOADING
+        module.exports.programSettings = await require(setfile)
+
+
+
+        //LOAD CONSTANTS
+        const alliances = require(__dirname + "/stable/alliance.js")
+        const towns = require(__dirname + "/stable/town.js")
+        const territory = require(__dirname + "/stable/territory.js")
+        const players = require(__dirname + "/stable/player.js")
+        const market_buy = require(__dirname + "/stable/market-buy.js")
+        const sales = require(__dirname + "/stable/market-sales.js")
+        const battle = require(__dirname + "/stable/battle.js")
+        const transactions = require(__dirname + "/stable/transactions.js")
+        const events = require(__dirname + "/events.js")
+
+
+        console.log("[Loka.js] - Exporting functions.")
+
+
+        module.exports["alliance"] = alliances
+        module.exports["town"] = towns
+        module.exports["territory"] = territory
+        module.exports["player"] = players
+        module.exports["market_sales"] = sales
+        module.exports["market_buy"] = market_buy
+        module.exports["battle"] = battle
+        module.exports["transaction"] = transactions
+        module.exports["events"] = events
+
+
+        //GET UP TO DATE LOGS
         if (process.argv.indexOf("--loadNewLogs") != -1) {
             console.log("[Loka.js] - Loading new logs into saves")
             var Result1 = await towns.get.fullList()
@@ -141,7 +209,7 @@ async function processArgs() {
             await fs.writeFileSync(module.exports.programSettings.logs.battle.filePath, await JSON.stringify(Result3.data))
 
 
-            var Result4 = await transactions.get.latest()
+            var Result4 = await transactions.get.latest("?size=120")
 
             if (Result4.error) {
                 console.log("[Loka.js] - Error at loading logs [TRANSACTIONLOG]")
@@ -152,6 +220,8 @@ async function processArgs() {
 
             console.log("[Loka.js] - Loaded new logs successfully!")
         }
+
+        
     }
 
 

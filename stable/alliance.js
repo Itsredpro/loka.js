@@ -37,28 +37,9 @@ module.exports.get.fullList = async function(){
     }
 
     if (out.data){
-        for (var i = 0; i< out.data.page.totalPages; i++){
-            var out = []
-            var error = false
-            try {
-                var res = await axios.get("https://testapi.lokamc.com/alliances?size=1000&page=" + i)
-                for (var i2 = 0; i2< res.data._embedded.alliances.length; i2++){
-                    out.push(res.data._embedded.alliances[i2])
-                }
-            } catch(e){
-                error = true
-            }
-
-            if (error){
-                return {
-                    error:true
-                }
-            } else {
-                return {
-                    error:false,
-                    data:out
-                }
-            }
+        return {
+            error:false,
+            data: out.data._embedded.alliances
         }
     } else {
         return {
@@ -71,9 +52,9 @@ async function allianceChecker(){
     var latest
 
     if (main.programSettings.logs.town.preserveLogs){
-        latest = await JSON.parse(await fs.readFileSync(main.programSettings.logs.town.filePath).toLocaleString())
+        latest = await JSON.parse(await fs.readFileSync(main.programSettings.logs.alliance.filePath).toLocaleString())
     } else {
-        if (main.programSettings.logs.town.useNewAsLatest){
+        if (main.programSettings.logs.alliance.useNewAsLatest){
             latest = []
         } else {
             latest = await module.exports.get.fullList().data

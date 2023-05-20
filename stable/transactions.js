@@ -89,10 +89,10 @@ module.exports.get.byType = async function (type) {
     }
 }
 
-module.exports.get.latest = async function () {
+module.exports.get.latest = async function (additionalParams) {
     var out = {}
     try {
-        out = await axios.get("https://testapi.lokamc.com/completed_market_orders/latest")
+        out = await axios.get("https://testapi.lokamc.com/completed_market_orders/latest" + additionalParams)
     } catch (e) {
 
     }
@@ -121,13 +121,13 @@ async function transactionChecker() {
         if (main.programSettings.logs.transaction.useNewAsLatest) {
             latest = []
         } else {
-            latest = await module.exports.get.latest().data
+            latest = await module.exports.get.latest("?size=120").data
         }
     }
 
 
     setInterval(async function () {
-        const data = await module.exports.get.latest()
+        const data = await module.exports.get.latest("?size=120")
         if (data.error) { await fs.appendFileSync(__dirname + "/../log.txt", "Error at fetching transaction latest list"); return }
 
         var tableA = latest

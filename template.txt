@@ -1,0 +1,61 @@
+module.exports = {
+    
+    "logs": { //=========LOG SETTINGS==========
+        "town": {
+            "preserveLogs": true, // Generate up-to-date logs with:    node node_modules/loka.js --noRun --loadNewLogs
+            "useNewAsLatest": false, // only modify if preserverlogs=false
+            "filePath": __dirname + "/node_modules/loka.js/saves/town.txt"
+        },
+        "alliance": { 
+            "preserveLogs": true,
+            "useNewAsLatest": false, // only modify if preserverlogs=false
+            "filePath": __dirname + "/node_modules/loka.js/saves/alliance.txt"
+        },
+        "battle": {  
+            "preserveLogs": true,
+            "useNewAsLatest": false, // only modify if preserverlogs=false
+            "filePath": __dirname + "/node_modules/loka.js/saves/battle.txt"
+        },
+        "transaction": {  
+            "preserveLogs": true,
+            "useNewAsLatest": false, // only modify if preserverlogs=false
+            "filePath": __dirname + "/node_modules/loka.js/saves/transaction.txt"
+        }
+    },//======================================
+    "settings":{//========SETTINGS============
+        "events":{
+            "town":{
+                "enabled":true,
+                "checkInterval": 120000, // time in ms
+            },
+            "alliance":{
+                "enabled":true,
+                "checkInterval": 120000, // time in ms 
+            },
+            "battle":{
+                "enabled":true,
+                "checkInterval": 20000, // time in ms
+            },
+            "transaction":{
+                "enabled":true,
+                "checkInterval": 20000, // time in ms
+            }
+        }
+    },
+    //============================
+
+
+
+
+
+
+
+
+    
+    //==========CORE==============
+    //Do not modify unless you know what you are doing.
+    "eventSettings": { 
+        "eventTypes": ['test', 'onbattle', "ontownappend", "ontownremove", "onallianceappend", "onallianceremove","ontransaction"]
+    }
+    //============================
+}
