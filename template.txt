@@ -1,5 +1,7 @@
 module.exports = {
-    
+    "settingsVersion":"1.2.0",
+
+
     "logs": { //=========LOG SETTINGS==========
         "town": {
             "preserveLogs": true, // Generate up-to-date logs with:    node node_modules/loka.js --noRun --loadNewLogs
@@ -23,6 +25,10 @@ module.exports = {
         }
     },//======================================
     "settings":{//========SETTINGS============
+        "live":{
+            "log_events":true,
+            "log_events_path": __dirname + "/node_modules/loka.js/saves/live.txt"
+        },
         "events":{
             "town":{
                 "enabled":true,
@@ -55,7 +61,7 @@ module.exports = {
     //==========CORE==============
     //Do not modify unless you know what you are doing.
     "eventSettings": { 
-        "eventTypes": ['test', 'onbattle', "ontownappend", "ontownremove", "onallianceappend", "onallianceremove","ontransaction"]
+        "eventTypes": ['*', 'test', 'onbattle', "ontownappend", "ontownremove", "onallianceappend", "onallianceremove","ontransaction"]
     }
     //============================
 }

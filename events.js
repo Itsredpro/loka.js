@@ -45,8 +45,8 @@ module.exports.fireEvents = async function(eventType,args){ // void function
     }
 
     register.events.forEach((v)=>{
-        if (v.type == eventType.toLocaleLowerCase()){
-            v.cb(args)
+        if (v.type == eventType.toLocaleLowerCase() || v.type == "*"){ //Added wildcard
+            v.cb(args, eventType)
         }
     })
 }

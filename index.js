@@ -69,6 +69,8 @@ const setfile = process.env.PWD + "/lokasettings.js"   //Modify this to your set
 }
     */
 //=======================================================================================================================
+const packageData = require(__dirname + "/package.json")
+const chalk = require('chalk')
 
 
 
@@ -82,7 +84,14 @@ async function processArgs() {
         if (!fs.existsSync(setfile)){
             throw new Error("[Loka.js] - " + setfile + " is not a valid file! [INVALID_SETTINGS_FILE]")
         }
-        module.exports.programSettings = require(setfile)
+        module.exports.programSettings = await require(setfile)
+
+        if (module.exports.programSettings.settingsVersion == undefined){
+            throw new Error("[Loka.js] - " + setfile + " is corrupted/old! [SETTINGS_FILE_CORRUPT]")
+        }
+        if (module.exports.programSettings.settingsVersion != packageData.version){ //Terminate if outdated
+            throw new Error("[Loka.js] - " + setfile + " is out to date! Version " + module.exports.programSettings.settingsVersion + " instead of version " + packageData.version + " [SETTINGS_FILE_OUTDATED]")
+        }
 
 
 
@@ -96,6 +105,8 @@ async function processArgs() {
         const battle = require(__dirname + "/stable/battle.js")
         const transactions = require(__dirname + "/stable/transactions.js")
         const events = require(__dirname + "/events.js")
+        const live = require(__dirname + "/stable/live.js")
+        //const eldritchbot = require(__dirname + "/stable/eldrictbot.js")    //Coming soon!
 
 
         console.log("[Loka.js] - Exporting functions.")
@@ -110,16 +121,47 @@ async function processArgs() {
         module.exports["battle"] = battle
         module.exports["transaction"] = transactions
         module.exports["events"] = events
-
+        //module.exports["eldrictbot"] = eldritchbot    //Coming soon!
 
 
 
         console.log("[Loka.js] - Running Event handlers.")
+
+
+
         //START EVENT HANDLERS
         battle.start()
         alliances.start()
         towns.start()
         transactions.start()
+
+        if (module.exports.programSettings.settings.live.log_events){
+            live.start()
+        }
+
+        console.log("[Loka.js] - Started succesfully.")
+
+
+        if (process.argv.indexOf("--monitor") != -1){ //EVENT MONITOR
+            var lokajsArt = await fs.readFileSync(__dirname + "/asciiArt.txt").toString()
+            lokajsArt = await chalk.red(lokajsArt)
+            lokajsArt = lokajsArt + await chalk.blue("\n\nBrought to you by @itsredstonepro (itsredstonepro#0979)\n--------------\nLogs:\n\n")
+
+            var logHistory = ''
+
+            console.clear()
+            console.log(lokajsArt)
+
+
+            events.registerEvent('*', async function(data, eventType) {
+                logHistory = eventType + " - " + data.id + "\n" + logHistory
+
+                console.clear()
+                console.log(lokajsArt + logHistory)
+            })
+        }
+
+        
 
 
     } else {
@@ -162,7 +204,7 @@ async function processArgs() {
         const events = require(__dirname + "/events.js")
 
 
-        console.log("[Loka.js] - Exporting functions.")
+        //console.log("[Loka.js] - Exporting functions.")
 
 
         module.exports["alliance"] = alliances
@@ -226,8 +268,6 @@ async function processArgs() {
 
 
 
-
-    console.log("[Loka.js] - Started succesfully.")
 }
 
 
