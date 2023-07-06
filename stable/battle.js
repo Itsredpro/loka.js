@@ -3,6 +3,8 @@ const events = require(__dirname + "/../events.js")
 const main = require(__dirname + "/../index.js")
 const fs = require("fs")
 
+const baseUrl = main.programSettings.settings.baseUrl || "https://www.api.lokamc.com"
+
 //Log errors to file.
 var olderr = console.error; console.error = async function (msg) { await require("fs").appendFileSync(__dirname + "/../log.txt", msg); olderr(msg) }
 
@@ -12,7 +14,7 @@ module.exports.get = {}
 module.exports.get.battles = async function () {
   var out = {}
   try {
-    out = await axios.get("https://testapi.lokamc.com/territories/search/findBattles")
+    out = await axios.get(baseUrl + "/territories/search/findBattles")
   } catch (e) {
 
   }
@@ -53,7 +55,7 @@ async function battleChecker() {
 
     try {
       results = await axios.get(
-        "https://testapi.lokamc.com/territories/search/findBattles"
+        baseUrl + "/territories/search/findBattles"
       );
     } catch (e) { }
 

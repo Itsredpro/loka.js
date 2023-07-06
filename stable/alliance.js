@@ -3,6 +3,8 @@ const events = require(__dirname + "/../events.js")
 const main = require(__dirname + "/../index.js")
 const fs = require("fs")
 
+const baseUrl = main.programSettings.settings.baseUrl || "https://www.api.lokamc.com"
+
 //Log errors to file.
 var olderr = console.error; console.error = async function(msg){await require("fs").appendFileSync(__dirname + "/../log.txt",msg);olderr(msg)}
 
@@ -11,7 +13,7 @@ module.exports.get = {}
 module.exports.get.byName = async function(exactName){
     var out = {}
     try {
-        out = await axios.get("http://testapi.lokamc.com/alliances/search/findByName?name=" + exactName)
+        out = await axios.get(baseUrl + "/alliances/search/findByName?name=" + exactName)
     } catch(e){
 
     }
@@ -31,7 +33,7 @@ module.exports.get.byName = async function(exactName){
 module.exports.get.fullList = async function(){
     var out = {}
     try {
-        out = await axios.get("https://testapi.lokamc.com/alliances?size=1000")
+        out = await axios.get(baseUrl + "/alliances?size=1000")
     } catch(e){
 
     }

@@ -46,7 +46,8 @@ module.exports = {
                 "enabled":true,
                 "checkInterval": 20000, // time in ms
             }
-        }
+        },
+        "baseUrl":"https://www.api.lokamc.com"
     },
     //============================
 

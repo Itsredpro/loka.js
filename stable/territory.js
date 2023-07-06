@@ -3,12 +3,16 @@ const axios = require("axios")
 //Log errors to file.
 var olderr = console.error; console.error = async function(msg){await require("fs").appendFileSync(__dirname + "/../log.txt",msg);olderr(msg)}
 
+
+const baseUrl = main.programSettings.settings.baseUrl || "https://www.api.lokamc.com"
+
+
 module.exports.get = {}
 
 module.exports.get.byId = async function(Id){
     var out = {}
     try {
-        out = await axios.get("http://testapi.lokamc.com/territories/search/findById?id=" + Id)
+        out = await axios.get(baseUrl + "/territories/search/findById?id=" + Id)
     } catch(e){
 
     }
@@ -29,7 +33,7 @@ module.exports.get.byId = async function(Id){
 module.exports.get.byNumb = async function(Numb){
     var out = {}
     try {
-        out = await axios.get("http://testapi.lokamc.com/territories/search/findByNum?num=" + Numb)
+        out = await axios.get(baseUrl + "/territories/search/findByNum?num=" + Numb)
     } catch(e){
 
     }
@@ -49,7 +53,7 @@ module.exports.get.byNumb = async function(Numb){
 module.exports.get.byWorldAndNumb = async function (world, numb){
     var out = {}
     try {
-        out = await axios.get("http://testapi.lokamc.com/territories/search/findByNum?num=" + numb + "&world=" + world)
+        out = await axios.get(baseUrl + "/territories/search/findByNum?num=" + numb + "&world=" + world)
     } catch(e){
 
     }
@@ -70,7 +74,7 @@ module.exports.custom = {}
 module.exports.custom.byTown = async function(townId){
     var out = {}
     try {
-        out = await axios.get("https://testapi.lokamc.com/territories?size=1000")
+        out = await axios.get(baseUrl + "/territories?size=1000")
     } catch(e){
 
     }

@@ -2,6 +2,7 @@ const axios = require("axios")
 const fs = require("fs");
 const events = require(__dirname + "/../events.js")
 const main = require(__dirname + "/../index.js")
+const baseUrl = main.programSettings.settings.baseUrl || "https://www.api.lokamc.com"
 
 //Log errors to file.
 var olderr = console.error; console.error = async function (msg) { await require("fs").appendFileSync(__dirname + "/../log.txt", msg); olderr(msg) }
@@ -11,7 +12,7 @@ module.exports.get = {}
 module.exports.get.byName = async function (exactName) {
     var out = {}
     try {
-        out = await axios.get("http://testapi.lokamc.com/completed_market_orders/search/findByName?name=" + exactName)
+        out = await axios.get(baseUrl + "completed_market_orders/search/findByName?name=" + exactName)
     } catch (e) {
 
     }
@@ -31,7 +32,7 @@ module.exports.get.byName = async function (exactName) {
 module.exports.get.byOwnerUuid = async function (uuid) {
     var out = {}
     try {
-        out = await axios.get("http://testapi.lokamc.com/completed_market_orders/search/findByOwnerId?uuid=" + uuid)
+        out = await axios.get(baseUrl + "/completed_market_orders/search/findByOwnerId?uuid=" + uuid)
     } catch (e) {
 
     }
@@ -52,7 +53,7 @@ module.exports.get.byOwnerUuid = async function (uuid) {
 module.exports.get.byBuyerUuid = async function (uuid) {
     var out = {}
     try {
-        out = await axios.get("http://testapi.lokamc.com/completed_market_orders/search/findByBuyerId?uuid=" + uuid)
+        out = await axios.get(baseUrl + "/completed_market_orders/search/findByBuyerId?uuid=" + uuid)
     } catch (e) {
 
     }
@@ -72,7 +73,7 @@ module.exports.get.byBuyerUuid = async function (uuid) {
 module.exports.get.byType = async function (type) {
     var out = {}
     try {
-        out = await axios.get("http://testapi.lokamc.com/completed_market_orders/search/findByType?type=" + type)
+        out = await axios.get(baseUrl + "/completed_market_orders/search/findByType?type=" + type)
     } catch (e) {
 
     }
@@ -92,7 +93,7 @@ module.exports.get.byType = async function (type) {
 module.exports.get.latest = async function (additionalParams) {
     var out = {}
     try {
-        out = await axios.get("https://testapi.lokamc.com/completed_market_orders/latest" + additionalParams)
+        out = await axios.get( baseUrl + "/completed_market_orders/latest" + additionalParams)
     } catch (e) {
 
     }

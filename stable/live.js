@@ -10,8 +10,7 @@ var olderr = console.error; console.error = async function (msg) { await require
 
 module.exports.start = async function (){
     var fileTarget = main.programSettings.settings.live.log_events_path
-
-
+    
     events.registerEvent('ontownappend', async function (town) {
         fs.appendFileSync(fileTarget, `\nTOWN APPEND - ${town.name} - ${new Date().toString().split(" (")[0]}`)
     })

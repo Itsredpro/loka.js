@@ -3,6 +3,8 @@ const events = require(__dirname + "/../events.js")
 const main = require(__dirname + "/../index.js")
 const fs = require("fs");
 
+const baseUrl = main.programSettings.settings.baseUrl || "https://www.api.lokamc.com"
+
 //Log errors to file.
 var olderr = console.error; console.error = async function (msg) { await require("fs").appendFileSync(__dirname + "/../log.txt", msg); olderr(msg) }
 
@@ -11,7 +13,7 @@ module.exports.get = {}
 module.exports.get.byName = async function (exactName) {
     var out = {}
     try {
-        out = await axios.get("http://testapi.lokamc.com/towns/search/findByName?name=" + exactName)
+        out = await axios.get(baseUrl + "/towns/search/findByName?name=" + exactName)
     } catch (e) {
 
     }
@@ -32,7 +34,7 @@ module.exports.get.byArea = async function (area) {
     // area = north, east, south, west (STRING)
     var out = {}
     try {
-        out = await axios.get("https://testapi.lokamc.com/towns/search/findByWorld?world=" + area)
+        out = await axios.get(baseUrl + "/towns/search/findByWorld?world=" + area)
     } catch (e) {
 
     }
@@ -53,7 +55,7 @@ module.exports.get.byArea = async function (area) {
 module.exports.get.fullList = async function () {
     var out = {}
     try {
-        out = await axios.get("https://testapi.lokamc.com/towns?size=1000")
+        out = await axios.get(baseUrl  + "/towns?size=1000")
     } catch (e) {
 
     }
@@ -63,7 +65,7 @@ module.exports.get.fullList = async function () {
             var out = []
             var error = false
             try {
-                var res = await axios.get("https://testapi.lokamc.com/towns?size=1000&page=" + i)
+                var res = await axios.get(baseUrl + "/towns?size=1000&page=" + i)
                 for (var i2 = 0; i2 < res.data._embedded.towns.length; i2++) {
                     out.push(res.data._embedded.towns[i2])
                 }
@@ -96,7 +98,7 @@ module.exports.custom = {}
 module.exports.custom.userTownSearch = async function (searchQuery) { // Primairly used for user interaction. Town searching, use it like you do with google.
     var out = {}
     try {
-        out = await axios.get("https://testapi.lokamc.com/towns?size=1000")
+        out = await axios.get(baseUrl + "/towns?size=1000")
     } catch (e) {
 
     }
