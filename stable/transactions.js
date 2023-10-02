@@ -115,6 +115,7 @@ module.exports.get.latest = async function (additionalParams) {
 
 async function transactionChecker() {
     var latest
+    
 
     if (main.programSettings.logs.transaction.preserveLogs) {
         latest = await JSON.parse(await fs.readFileSync(main.programSettings.logs.transaction.filePath).toLocaleString())
@@ -125,11 +126,16 @@ async function transactionChecker() {
             latest = await module.exports.get.latest("?size=120").data
         }
     }
-
+    var latestID = latest[0].id || ""
+   
 
     setInterval(async function () {
+        const test = await module.exports.get.latest("?size=1")
+        if (test[0].id == latestID){return} else {latestID = test[0].id}
+
         const data = await module.exports.get.latest("?size=120")
         if (data.error) { await fs.appendFileSync(__dirname + "/../log.txt", "Error at fetching transaction latest list"); return }
+        
 
         var tableA = latest
         var tableB = data.data

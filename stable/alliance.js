@@ -62,8 +62,13 @@ async function allianceChecker(){
             latest = await module.exports.get.fullList().data
         }
     }
+    
+    var latestID = latest[0].id || ""
 
     setInterval(async () => {
+        const test = await module.exports.get.latest("?size=1")
+        if (test[0].id == latestID){return} else {latestID = test[0].id}
+
         const data = await module.exports.get.fullList()
         if (data.error) { await fs.appendFileSync(__dirname + "/../log.txt", "Error at fetching alliance full list"); return }
 
