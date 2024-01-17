@@ -1,5 +1,5 @@
 module.exports = {
-    "settingsVersion":"1.2.0",
+    "settingsVersion":"1.2.6",
 
 
     "logs": { //=========LOG SETTINGS==========
@@ -47,7 +47,7 @@ module.exports = {
                 "checkInterval": 20000, // time in ms
             }
         },
-        "baseUrl":"https://www.api.lokamc.com"
+        "baseUrl":"https://api.lokamc.com"
     },
     //============================
 
