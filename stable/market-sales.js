@@ -2,6 +2,7 @@ const axios = require("axios")
 
 //Log errors to file.
 var olderr = console.error; console.error = async function(msg){await require("fs").appendFileSync(__dirname + "/../log.txt",msg);olderr(msg)}
+const main = require(__dirname + "/../index.js")
 
 const baseUrl = main.programSettings.settings.baseUrl || "https://www.api.lokamc.com"
 

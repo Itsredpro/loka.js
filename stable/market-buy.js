@@ -1,4 +1,5 @@
 const axios = require("axios")
+const main = require(__dirname + "/../index.js")
 
 const baseUrl = main.programSettings.settings.baseUrl || "https://www.api.lokamc.com"
 
